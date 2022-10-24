@@ -8,61 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    
-    @State var Label="Label"
+
+
+    @State var resultText = "Label"
     @State var number1=""
     @State var number2=""
     @State var number3=""
     @State var number4=""
     @State var number5=""
-    
-    func changeNum(_ text:String) -> Int{
-        guard let num = Int(text) else{
-            return 0
-        }
-        return num
+
+    func changeNum(_ text:String) -> Int {
+        Int(text) ?? 0
     }
- 
-    
+
+
     var body: some View {
-        
-        var sumNumber = changeNum(number1)+changeNum(number2)+changeNum(number3)+changeNum(number4)+changeNum(number5)
-        
+
+        let sumNumber = changeNum(number1)+changeNum(number2)+changeNum(number3)+changeNum(number4)+changeNum(number5)
+
 
         VStack {
-            TextField("",text: self.$number1)
-                .frame(width: 100, height: 25)
-                .border(Color.black,width:1)
-                .keyboardType(.numberPad)
-            TextField("",text: self.$number2)
-                .frame(width: 100, height: 25)
-                .border(Color.black,width:1)
-                .keyboardType(.numberPad)
-            TextField("",text: self.$number3)
-                .frame(width: 100, height: 25)
-                .border(Color.black,width:1)
-                .keyboardType(.numberPad)
-            TextField("",text: self.$number4)
-                .frame(width: 100, height: 25)
-                .border(Color.black,width:1)
-                .keyboardType(.numberPad)
-            TextField("",text: self.$number5)
-                .frame(width: 100, height: 25)
-                .border(Color.black,width:1)
-                .keyboardType(.numberPad)
-            
-        
-            
+            CustomTextField(number: $number1)
+            CustomTextField(number: $number2)
+            CustomTextField(number: $number3)
+            CustomTextField(number: $number4)
+            CustomTextField(number: $number5)
+
             Button(action: {
-                Label = "\(sumNumber)"
+                resultText = "\(sumNumber)"
 
             }, label: {
                 Text("Button")
             })
-            
-            Text(Label)
+
+            Text(resultText)
         }
+    }
+}
+
+struct CustomTextField: View {
+    @Binding var number: String
+
+    var body: some View {
+        TextField("", text: $number)
+            .frame(width: 100, height: 25)
+            .border(Color.black, width:1)
+            .keyboardType(.numberPad)
     }
 }
 
